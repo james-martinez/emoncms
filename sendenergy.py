@@ -22,12 +22,14 @@ while 1:
 
   # Read in line of readings from analog channel x
   in0=open("/sys/class/hwmon/hwmon0/device/in0_input","r")
+  datin0 = in0.read()
   in0.close()
   
   in1=open("/sys/class/hwmon/hwmon0/device/in1_input","r")
+  datin1 = in1.read()
   in0.close()
   
-  linestr = in0.readline()
+  linestr = datin0 + datin1
 
   # Remove the new line at the end
   linestr = linestr.rstrip()
