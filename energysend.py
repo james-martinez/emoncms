@@ -17,10 +17,17 @@ nodeid = 1
 
 conn = httplib.HTTPConnection(domain)
 
+
 while 1:
 
-  # Read in line of readings from emontx serial
-  linestr = ser.readline()
+  # Read in line of readings from analog channel x
+  in0=open("/sys/class/hwmon/hwmon0/device/in0_input","r")
+  in0.close()
+  
+  in1=open("/sys/class/hwmon/hwmon0/device/in1_input","r")
+  in0.close()
+  
+  linestr = in0.readline()
 
   # Remove the new line at the end
   linestr = linestr.rstrip()
