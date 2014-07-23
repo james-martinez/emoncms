@@ -20,27 +20,24 @@ conn = httplib.HTTPConnection(domain)
 
 while 1:
 
-  # Read in line of readings from analog channel x
-  in0=open("/sys/class/hwmon/hwmon0/device/in0_input","r")
-  datin0 = in0.read()
-  in0.close()
-  
-  in1=open("/sys/class/hwmon/hwmon0/device/in1_input","r")
-  datin1 = in1.read()
-  in0.close()
-  
-  linestr = datin0 + datin1
 
-  # Remove the new line at the end
-  linestr = linestr.rstrip()
+        in0 = open('/sys/class/hwmon/hwmon0/device/in0_input', 'r')
+        in0val = in0.read()
+        in0.close()
+        in1 = open('/sys/class/hwmon/hwmon0/device/in1_input', 'r')
+        in1val = in1.read()
+        in1.close()
+        in2 = open('/sys/class/hwmon/hwmon0/device/in2_input', 'r')
+        in2val = in2.read()
+        in2.close()
+        in3 = open('/sys/class/hwmon/hwmon0/device/in3_input', 'r')
+        in3val = in3.read()
+        in3.close()
+        linestr = in0val.rstrip() + " " + in1val.rstrip() + " " + in2val.rstrip() + " " + in3val.rstrip()
+        array = linestr.split(' ')
+        csv = ",".join(array)
+        print csv
 
-  print linestr
-
-  # Split the line at the whitespaces
-  array = linestr.split(' ')
-
-  # Create csv string
-  csv = ",".join(array)
 
   # Send to emoncms
   # For example using the first json type request above just add the apikey to the end like this:	http://emoncms.org/input/post.json?json={power:200}&apikey=xxxxxxxxxxxxxxxxxxx6
