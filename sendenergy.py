@@ -49,4 +49,5 @@ while 1:
         conn.request("GET", "/"+emoncmspath+"/input/post.json?apikey="+apikey+"&node="+str(nodeid)+"&csv="+csv)
         response = conn.getresponse()
         print response.read()
+        time.sleep(5)
         
