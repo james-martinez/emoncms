@@ -17,6 +17,14 @@ nodeid = 1
 
 conn = httplib.HTTPConnection(domain)
 
+out0en = open('/sys/class/hwmon/hwmon0/device/out0_enable', 'w')
+out0en.write(str(1))
+out0en.close
+
+out0 = open('/sys/class/hwmon/hwmon0/device/out0_output', 'w')
+out0.write(str(255))
+out0.close
+
 while 1:
 
 # Read analog values
@@ -41,3 +49,4 @@ while 1:
         conn.request("GET", "/"+emoncmspath+"/input/post.json?apikey="+apikey+"&node="+str(nodeid)+"&csv="+csv)
         response = conn.getresponse()
         print response.read()
+        
