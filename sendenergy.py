@@ -1,4 +1,4 @@
-import serial, sys
+import serial, sys, time
 import httplib
 
 # Domain you want to post to: localhost would be an emoncms installation on your own laptop
@@ -17,10 +17,9 @@ nodeid = 1
 
 conn = httplib.HTTPConnection(domain)
 
-
 while 1:
 
-
+# Read analog values
         in0 = open('/sys/class/hwmon/hwmon0/device/in0_input', 'r')
         in0val = in0.read()
         in0.close()
@@ -38,12 +37,7 @@ while 1:
         csv = ",".join(array)
         print csv
 
-
-  # Send to emoncms
-  # For example using the first json type request above just add the apikey to the end like this:	http://emoncms.org/input/post.json?json={power:200}&apikey=xxxxxxxxxxxxxxxxxxx6
-  # To use this module send a byte value csv string and the node id to: http://emoncms.org//node/set.json?nodeid=10&data=20,20,20,20
-  # You can provide data using bulk mode	http://emoncms.org/input/bulk.json?data=[[0,16,1137],[2,17,1437,3164],[4,19,1412,3077]]
-  # http://emoncms.org/input/api
-  conn.request("GET", "/"+emoncmspath+"/input/post.json?apikey="+apikey+"&node="+str(nodeid)+"&csv="+csv)
-  response = conn.getresponse()
-  print response.read()
+# Send to emoncms
+        conn.request("GET", "/"+emoncmspath+"/input/post.json?apikey="+apikey+"&node="+str(nodeid)+"&csv="+csv)
+        response = conn.getresponse()
+        print response.read()
