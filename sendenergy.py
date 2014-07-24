@@ -49,5 +49,10 @@ while 1:
         conn.request("GET", "/"+emoncmspath+"/input/post.json?apikey="+apikey+"&node="+str(nodeid)+"&csv="+csv)
         response = conn.getresponse()
         print response.read()
+        conn.close()
+        
+        out0 = open('/sys/class/hwmon/hwmon0/device/out0_output', 'w')
+        out0.write(str(0))
+        out0.close
         time.sleep(5)
         
