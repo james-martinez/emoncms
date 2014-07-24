@@ -15,19 +15,23 @@ apikey = "b742b99d9880b27ff50ce73b17c2e224"
 # Node id youd like the emontx to appear as
 nodeid = 1
 
+# Connection to web
 conn = httplib.HTTPConnection(domain)
 
+#Enable dac output 
 out0en = open('/sys/class/hwmon/hwmon0/device/out0_enable', 'w')
 out0en.write(str(1))
 out0en.close
 
-out0 = open('/sys/class/hwmon/hwmon0/device/out0_output', 'w')
-out0.write(str(255))
-out0.close
-
+#Loop forever
 while 1:
+        
+# Turn on led        
+        out0 = open('/sys/class/hwmon/hwmon0/device/out0_output', 'w')
+        out0.write(str(255))
+        out0.close
 
-# Read analog values
+# Read analog values and format into csv
         in0 = open('/sys/class/hwmon/hwmon0/device/in0_input', 'r')
         in0val = in0.read()
         in0.close()
@@ -49,6 +53,7 @@ while 1:
         print response.read()
         conn.close()
         
+# Turn off led and wait for next reading
         out0 = open('/sys/class/hwmon/hwmon0/device/out0_output', 'w')
         out0.write(str(0))
         out0.close
