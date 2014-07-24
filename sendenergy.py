@@ -40,9 +40,7 @@ while 1:
         in3 = open('/sys/class/hwmon/hwmon0/device/in3_input', 'r')
         in3val = in3.read()
         in3.close()
-        linestr = in0val.rstrip() + " " + in1val.rstrip() + " " + in2val.rstrip() + " " + in3val.rstrip()
-        array = linestr.split(' ')
-        csv = ",".join(array)
+        csv = in0val.rstrip() + "," + in1val.rstrip() + "," + in2val.rstrip() + "," + in3val.rstrip()
         print csv
 
 # Send to emoncms
